@@ -1,12 +1,25 @@
 package com.codeup.floatmechallenge.Person;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 
+@Entity
+@Table(name = "persons")
 public class Person {
-    private long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false, length = 240)
     private String name;
+
+    @Column(nullable = false)
     private Integer age;
+
+    @Column(columnDefinition = "DATE")
     private LocalDate dateJoined;
+
+    @Column(columnDefinition = "DATE")
     private LocalDate dateUpdated;
 
     public Person() {
