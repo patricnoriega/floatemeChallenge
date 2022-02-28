@@ -16,4 +16,16 @@ public class PersonService {
     public List<Person>getPerson(){
         return personRepository.findAll();
     }
+
+    public void addNewPerson(Person person) {
+        System.out.println(person);
+    }
+
+    public void deletePerson(Long personId) {
+        boolean exists = personRepository.existsById(personId);
+        if (!exists){
+            throw new IllegalStateException(personId + "is not found");
+        }
+        personRepository.deleteById(personId);
+    }
 }
