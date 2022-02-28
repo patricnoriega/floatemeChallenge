@@ -30,4 +30,5 @@ public class PersonController {
     public void deletePerson(@PathVariable("personId") Long personId){
         personService.deletePerson(personId);
     }
+
 }
