@@ -42,7 +42,7 @@ public class Person {
 
 
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
