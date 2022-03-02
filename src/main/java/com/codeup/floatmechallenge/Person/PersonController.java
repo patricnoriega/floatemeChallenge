@@ -1,34 +1,52 @@
 package com.codeup.floatmechallenge.Person;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/person")
 public class PersonController {
 
-    private final PersonService personService;
+    private final PersonRepository personDao;
 
-    @Autowired
-    public PersonController(PersonService personService){
-        this.personService = personService;
+    public PersonController(PersonRepository personDao) {
+        this.personDao = personDao;
     }
 
+    //show all people
     @GetMapping
-    public List<Person>getPerson(){
-        return personService.getPerson();
+    public List<Person> getPersons() {
+        return personDao.findAll();
     }
 
+    //add a new person
     @PostMapping
-    public void addNewPerson(@RequestBody Person person){
-        personService.addNewPerson(person);
+    public Person addNewPerson(@RequestBody Person newPerson) {
+
+        Optional<Person> personOptional = personDao.findPersonByName(newPerson.getName());
+
+        if (personOptional.isPresent()) {
+            throw new IllegalStateException("Person already exists");
+        }
+        System.out.println("Hello" + newPerson);
+        return personDao.save(newPerson);
     }
 
-    @DeleteMapping("{personId}")
-    public void deletePerson(@PathVariable("personId") Long personId){
-        personService.deletePerson(personId);
+
+    //delete a person by ID
+    @DeleteMapping(path = "{personId}")
+    public void deletePerson(@PathVariable("personId") Long id) {
+
+        boolean exists = personDao.existsById(id);
+
+        if (!exists) {
+            throw new IllegalStateException("person with id " + id + " does not exist");
+        }
+        personDao.deleteById(id);
     }
 
 }
