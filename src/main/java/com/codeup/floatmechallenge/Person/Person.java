@@ -81,15 +81,4 @@ public class Person {
     public void setDateUpdated(LocalDate dateUpdated) {
         this.dateUpdated = dateUpdated;
     }
-
-    @Override
-    public String toString() {
-        return "Person{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", age=" + age +
-                ", dateJoined=" + dateJoined +
-                ", dateUpdated=" + dateUpdated +
-                '}';
-    }
 }
